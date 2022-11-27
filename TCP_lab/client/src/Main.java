@@ -29,7 +29,6 @@ public class Main {
 
     }
 }
-
 class Receiver extends Thread {
     Socket socket;
 
