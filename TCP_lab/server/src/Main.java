@@ -39,13 +39,24 @@ public class Main extends Thread {
     }
     void send_message(Socket socket, String string){
         try {
-            OutputStream out = socket.getOutputStream(); // 쓰기
+            OutputStream out = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(out, "UTF-8")), true);
             writer.println(string);
-            writer.flush();
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+    void send_user_message(Socket socket, String string){
+        send_message(socket, nick + ": " + string);
+    }
+    boolean create_room(){
+        TreeMap<String, Socket> treeMap = new TreeMap<>();
+        treeMap.put(nick,socket);
+        users.put(roomName,treeMap);
+        String str = nick + " join into the chatting room.";
+        send_message(socket,str);
+        temp_bucket.remove(socket);
+        return true;
     }
     boolean join_room(){
         TreeMap<String, Socket> treeMap = users.get(roomName);
@@ -83,32 +94,42 @@ public class Main extends Thread {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(input,"UTF-8")); // 읽기
                 if ((str = reader.readLine()) != null) {
                     if (state.equals(State.WAIT)) {
-                        if (str.equals("#QUIT")) {
-                            send_message(socket, str);
-                            remove_socket();
-                            break;
-                        }
+//                        if (str.equals("#QUIT")) {
+////                            send_message(socket, str);
+//                            remove_socket();
+//                            socket.close();
+//                            break;
+//                        }
                         if (str.startsWith("#JOIN ")) {
+                            if (str.split(" ").length < 3)
+                                continue;
                             roomName = str.split(" ")[1];
                             nick = str.split(" ")[2];
-                            if (nick.equals("") || roomName.equals(""))
+                            if (nick.equals("") || roomName.equals("")) {
+                                nick = "";
+                                roomName = "";
                                 continue;
-                            if (users.containsKey(roomName)) {
-                                join_room();
+                            }
+                            if (users.containsKey(roomName) && join_room()) {
                                 state = State.CHAT;
                             } else {
                                 send_message(socket,"Fail");
                             }
                         }
                         if (str.startsWith("#CREATE ")) {
+                            if (str.split(" ").length < 3)
+                                continue;
                             roomName = str.split(" ")[1];
                             nick = str.split(" ")[2];
-                            if (nick.equals("") || roomName.equals(""))
+                            if (nick.equals("") || roomName.equals("")) {
+                                nick = "";
+                                roomName = "";
                                 continue;
+                            }
                             if (users.containsKey(roomName)) {
                                 send_message(socket,"Fail");
                             } else {
-                                join_room();
+                                create_room();
                                 state = State.CHAT;
                             }
                         }
@@ -116,12 +137,13 @@ public class Main extends Thread {
                         if (str.startsWith("#")){
                             if (str.equals("#EXIT")) {
                                 exit_room();
+                                send_message(socket,"Exit successful.");
                                 state = State.WAIT;
                             }
                             continue;
                         }
                         for (Map.Entry<String,Socket> entry : users.get(roomName).entrySet()) {
-                            send_message(entry.getValue(),str);
+                            send_user_message(entry.getValue(),str);
                         }
                     }
                 }

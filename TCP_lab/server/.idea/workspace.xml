@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="48900dbd-5e68-4d32-a24c-ed05c8dd9107" name="Changes" comment="" />
+    <list default="true" id="48900dbd-5e68-4d32-a24c-ed05c8dd9107" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../client/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/server/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/server/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,14 +28,14 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Sun/IdeaProjects/TestProject"
+    "last_opened_file_path": "C:/Users/Sun/IdeaProjects/ENE4019/TCP_lab/client"
   }
 }]]></component>
   <component name="RunManager">
     <configuration name="Server" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="server" />
-      <option name="PROGRAM_PARAMETERS" value="2400 2500" />
+      <option name="PROGRAM_PARAMETERS" value="2020 2021" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
